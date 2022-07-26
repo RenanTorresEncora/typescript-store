@@ -1,15 +1,15 @@
 import React from 'react';
+import Content from './components/Content';
+import Header from './components/Header';
 
-const App = () => {
+const App: React.FC = () => {
   return (
-    <div>
-      <header>
-        <p>
-          Start of TypeScript Store example.
-        </p>
-      </header>
-    </div>
+    <>
+      <Header />
+      <hr></hr>
+      <Content />
+    </>
   );
-}
+};
 
 export default App;
