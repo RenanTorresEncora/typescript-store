@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export const useFetch = (endpoint: string) => {
+const useFetch = (endpoint: string) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -11,3 +11,5 @@ export const useFetch = (endpoint: string) => {
 
   return data;
 };
+
+export default useFetch;
