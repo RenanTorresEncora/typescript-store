@@ -1,10 +1,11 @@
 import React from 'react';
+import { StyledHeader, SubTitle, Title } from './styles';
 
 const Header: React.FC = () => (
-  <header>
-    <h1>TypeScript Store</h1>
-    <h3> Affordable prices, awesome offers!</h3>
-  </header>
+  <StyledHeader>
+    <Title>TypeScript Store</Title>
+    <SubTitle> Affordable prices, awesome offers!</SubTitle>
+  </StyledHeader>
 );
 
 export default Header;

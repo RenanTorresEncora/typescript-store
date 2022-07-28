@@ -8,10 +8,17 @@ const Content: React.FC = () => {
   const saleCards = useFetch(limitProducts(5)).map((item: SaleItemType) => (
     <SaleCard key={item.id} item={item} />
   ));
+
+  const getNewItems = () => {
+    console.log('click');
+  };
   return (
-    <SaleCardsContainer>
-      {saleCards}
-    </SaleCardsContainer>
+    <>
+      <SaleCardsContainer>{saleCards}</SaleCardsContainer>
+      <button type="button" onClick={getNewItems}>
+        Get new Items
+      </button>
+    </>
   );
 };
 

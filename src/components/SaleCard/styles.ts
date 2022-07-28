@@ -6,8 +6,8 @@ export const Card = styled.div`
   height: 20rem;
   width: 10rem;
   border-radius: 1rem;
-  border: 2px solid #b0fefe;
-  background-color: #f0fefe;
+  border: 2px solid #b0b0b0;
+  background-color: #f0f0f0;
   overflow: hidden;
   align-items: center;
   padding: 1rem;
@@ -18,21 +18,34 @@ interface ImageProps {
 }
 export const CardImage = styled.div`
   display: flex;
-  flex: 1 0 200px;
+  flex: 1 0 5rem;
+  border: 1px solid black;
+  border-radius: 0.25rem;
+  margin: 0.25rem;
   ${({ src }: ImageProps) => css`
+    background-color: white;
     background-image: url('${src}');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
   `}
-  
-  height: 100px;
-  width: 100px;
+  width: 100%;
+  max-height: 5rem;
+  max-width: 10rem;
 `;
 export const CardTitle = styled.h3`
-font-size: 1rem;
-word-wrap: break-word;
+  display: block;
+  overflow: hidden;
+  font-size: 1rem;
+  height: 2.5rem;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  width: 100%;
+  word-wrap: break-word;
 `;
 
 export const CardDescription = styled.p`
-font-size:0.75rem`;
+  display: block;
+  overflow: hidden;
+  font-size: 0.75rem;
+`;

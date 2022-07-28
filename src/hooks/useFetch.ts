@@ -15,10 +15,9 @@ const getDataWithXmlHttpReq = (
   setData: Dispatch<SetStateAction<never[]>>,
 ) => {
   const xmlReq = new XMLHttpRequest();
-  xmlReq.onreadystatechange = () => {
-    if (xmlReq.readyState === 4 && xmlReq.status === 200) {
-      setData(Array.from(JSON.parse(xmlReq.response)));
-    }
+  xmlReq.responseType = 'json';
+  xmlReq.onload = () => {
+    setData(xmlReq.response);
   };
   xmlReq.open('GET', endpoint);
   xmlReq.send();
