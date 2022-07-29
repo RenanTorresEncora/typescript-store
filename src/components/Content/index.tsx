@@ -1,24 +1,25 @@
-import React from 'react';
-import { limitProducts } from '../../api/API';
+import React, { useState } from 'react';
+import { productsEndpoint, limitProducts } from '../../api/APIRoutes';
 import useFetch from '../../hooks/useFetch';
 import SaleCard, { SaleItemType } from '../SaleCard';
-import SaleCardsContainer from './styles';
+import { SaleCardsContainer, StyledContent } from './styles';
 
 const Content: React.FC = () => {
-  const saleCards = useFetch(limitProducts(5)).map((item: SaleItemType) => (
+  const [dataUrl, setDataUrl] = useState(limitProducts(4));
+  const saleCards = useFetch(dataUrl).map((item: SaleItemType) => (
     <SaleCard key={item.id} item={item} />
   ));
 
   const getNewItems = () => {
-    console.log('click');
+    setDataUrl(productsEndpoint);
   };
   return (
-    <>
+    <StyledContent>
       <SaleCardsContainer>{saleCards}</SaleCardsContainer>
       <button type="button" onClick={getNewItems}>
         Get new Items
       </button>
-    </>
+    </StyledContent>
   );
 };
 

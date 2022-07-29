@@ -1,13 +1,40 @@
 import styled from 'styled-components';
 
-const SaleCardsContainer = styled.section`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 25rem;
+export const StyledContent = styled.div`
   background-color: #dedede;
-  gap:1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
 `;
+export const SaleCardsContainer = styled.section`
+  display: grid;
+  grid-auto-flow: column;
+  overflow-x: auto;
+  align-items: center;
+  width: 80%;
+  height: 22rem;
+  padding-inline: 5%;
+  gap: 1rem;
 
-export default SaleCardsContainer;
+  &:before {
+    position: absolute;
+    content: '';
+    background: linear-gradient(90deg, #dedede, transparent);
+    height: 100%;
+    width: 10%;
+    left: 10%;
+    z-index: 10;
+  }
+  &:after {
+    position: absolute;
+    content: '';
+    background: linear-gradient(270deg, #dedede, transparent);
+    height: 100%;
+    width: 10%;
+    right: 10%;
+  }
+`;

@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 export const Card = styled.div`
   display: flex;
   flex-direction: column;
+  flex: 1 0 auto;
   height: 20rem;
   width: 10rem;
   border-radius: 1rem;
@@ -11,6 +12,7 @@ export const Card = styled.div`
   overflow: hidden;
   align-items: center;
   padding: 1rem;
+  position: relative;
 `;
 
 interface ImageProps {
@@ -44,8 +46,52 @@ export const CardTitle = styled.h3`
   word-wrap: break-word;
 `;
 
+export const LowerTab = styled.div`
+--tab-height: 2rem;
+display: flex;
+height: var(--tab-height);
+align-items: center;
+width: 100%;
+justify-content: space-between;
+padding-inline: 1rem;
+position: absolute;
+bottom: 0.15rem;
+`;
+
 export const CardDescription = styled.p`
+--tab-height: 2rem;
+
   display: block;
-  overflow: hidden;
+  overflow-x: hidden;
+  height: calc(10rem - var(--tab-height));
   font-size: 0.75rem;
+`;
+
+export const PriceTag = styled.div`
+display: flex;
+font-family: 'Courier New', Courier, monospace;
+align-items: center;
+font-size: 1rem;
+color: #333;
+`;
+
+export const BuyButton = styled.button`
+background-color: lightblue;
+color: blue;
+border: 2px solid darkblue;
+padding: 0.25rem 0.5rem;
+border-radius: 0.25rem;
+text-transform: uppercase;
+font-weight: bold;
+transition: background-color, transform 150ms;
+&:hover {
+  transform: translateY(-0.15rem);
+  background-color: darkblue;
+  color: lightblue;
+}
+&:active{
+  transform: translateY(0rem);
+  background-color: darkblue;
+  color: white;
+}
 `;
