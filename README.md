@@ -4,10 +4,10 @@ This project was created to study the TypeScript library and also how to fetch d
 
 ## Technologies used:
 
--React v18.2.0
--TypeScript v4.7.4
--Node v16.16.0
--[FakeStoreAPI](https://fakestoreapi.com/) - for the products API
+- React v18.2.0\
+- TypeScript v4.7.4\
+- Node v16.16.0\
+- [FakeStoreAPI](https://fakestoreapi.com/) - for the products API
 
 ## Available Scripts
 
