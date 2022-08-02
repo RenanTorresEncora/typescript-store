@@ -7,7 +7,6 @@ const App: React.FC = () => (
   <>
     <GlobalStyle />
     <Header />
-    <hr />
     <Content />
   </>
 );

@@ -1,5 +1,13 @@
 import React from 'react';
-import { Card, CardDescription, CardImage, CardTitle, LowerTab, PriceTag, BuyButton } from './styles';
+import {
+  Card,
+  CardDescription,
+  CardImage,
+  CardTitle,
+  PriceTag,
+  BuyButton,
+  LowerTab,
+} from './styles';
 
 export type SaleItemType = {
   id: number;
@@ -19,13 +27,12 @@ const SaleCard: React.FC<IProps> = ({ item }): JSX.Element => {
   return (
     <Card>
       <CardImage src={image} />
+      <PriceTag>
+        {`US$ ${price}`}
+      </PriceTag>
       <CardTitle>{title}</CardTitle>
       <CardDescription>{description}</CardDescription>
       <LowerTab>
-        <PriceTag>
-          US$
-          {price}
-        </PriceTag>
         <BuyButton>Buy!</BuyButton>
       </LowerTab>
     </Card>

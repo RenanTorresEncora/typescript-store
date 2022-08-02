@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
 export const StyledHeader = styled.header`
-  background-color: lightgray;
+  background-color: white;
+  box-shadow: 0rem 0rem 1rem #555;
   padding: 1rem;
+  z-index: 100;
+  width: 100%;
+  height: var(--header-height);
+  top:0;
+  position: fixed;
 `;
 
 export const Title = styled.h1`
