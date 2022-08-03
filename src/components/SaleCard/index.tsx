@@ -1,4 +1,6 @@
 import React from 'react';
+import { Navigate, useNavigate } from 'react-router';
+import { productsEndpoint } from '../../api/APIRoutes';
 import {
   Card,
   CardDescription,
@@ -23,7 +25,11 @@ interface IProps {
   item: SaleItemType;
 }
 const SaleCard: React.FC<IProps> = ({ item }): JSX.Element => {
-  const { title, description, image, price } = item;
+  const { id, title, description, image, price } = item;
+  const navigator = useNavigate();
+  const goToItemPage = () => {
+    navigator(`product/${id}`);
+  };
   return (
     <Card>
       <CardImage src={image} />
@@ -33,7 +39,7 @@ const SaleCard: React.FC<IProps> = ({ item }): JSX.Element => {
       <CardTitle>{title}</CardTitle>
       <CardDescription>{description}</CardDescription>
       <LowerTab>
-        <BuyButton>Buy!</BuyButton>
+        <BuyButton onClick={goToItemPage}>Buy!</BuyButton>
       </LowerTab>
     </Card>
   );
