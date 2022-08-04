@@ -10,7 +10,7 @@ const Home: React.FC = () => {
   ));
 
   useEffect(() => {
-    getAllProducts().then((data) => setProducts(data));
+    getAllProducts().then((data) => setProducts(data as SaleItemType[]));
   }, []);
   return <SaleCardsContainer>{saleCards}</SaleCardsContainer>;
 };
