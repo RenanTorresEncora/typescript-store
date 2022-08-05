@@ -1,11 +1,18 @@
 import React from 'react';
-import { StyledHeader, SubTitle, Title } from './styles';
+import { useNavigate } from 'react-router';
+import { CartButton, StyledHeader, SubTitle, Title } from './styles';
 
-const Header: React.FC = () => (
-  <StyledHeader>
-    <Title>TypeScript Store</Title>
-    <SubTitle> Affordable prices, awesome offers!</SubTitle>
-  </StyledHeader>
-);
+const Header: React.FC = () => {
+  const goToPage = useNavigate();
+  return (
+    <StyledHeader>
+      <Title>TypeScript Store</Title>
+      <SubTitle> Affordable prices, awesome offers!</SubTitle>
+      <CartButton
+        onClick={() => goToPage(`/cart/${Math.round(Math.random() * 21)}`)}
+      />
+    </StyledHeader>
+  );
+};
 
 export default Header;
