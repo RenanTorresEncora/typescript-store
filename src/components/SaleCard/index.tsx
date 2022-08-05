@@ -1,6 +1,5 @@
 import React from 'react';
-import { Navigate, useNavigate } from 'react-router';
-import { productsEndpoint } from '../../api/APIRoutes';
+import { useNavigate } from 'react-router';
 import {
   Card,
   CardDescription,
@@ -27,15 +26,13 @@ interface IProps {
 const SaleCard: React.FC<IProps> = ({ item }): JSX.Element => {
   const { id, title, description, image, price } = item;
   const navigator = useNavigate();
-  const goToItemPage = () => {
+  const goToItemPage: () => void = () => {
     navigator(`product/${id}`);
   };
   return (
     <Card>
       <CardImage src={image} />
-      <PriceTag>
-        {`US$ ${price}`}
-      </PriceTag>
+      <PriceTag>{`US$ ${price}`}</PriceTag>
       <CardTitle>{title}</CardTitle>
       <CardDescription>{description}</CardDescription>
       <LowerTab>

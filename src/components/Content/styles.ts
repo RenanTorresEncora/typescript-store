@@ -10,6 +10,7 @@ export const StyledContent = styled.div`
   width: 100%;
   position: relative;
   margin-top: var(--header-height);
+  padding-top: calc(var(--header-height) * 0.25);
 `;
 export const SaleCardsContainer = styled.section`
   display: grid;

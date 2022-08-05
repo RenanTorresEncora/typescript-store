@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledHeader = styled.header`
   background-color: white;
-  box-shadow: 0rem 0rem 1rem #555;
+  box-shadow: 0rem 0rem 0.5rem #555;
   padding: 1rem;
   z-index: 100;
   width: 100%;

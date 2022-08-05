@@ -1,11 +1,10 @@
-import { SaleItemType } from '../components/SaleCard';
-import { oneProductEndpoint, productsEndpoint } from './APIRoutes';
+import { oneProductEndpoint, productsEndpoint, userCartEndpoint } from './APIRoutes';
 
 export const getAllProducts = () => getDataFromAPI(productsEndpoint);
 export const getOneProduct = (id: string) => getDataFromAPI(oneProductEndpoint(id));
+export const getUserCart = (userId: string) => getDataFromAPI(userCartEndpoint(userId));
 
-// eslint-disable-next-line max-len
-const getDataFromAPI = (endpoint: string) => new Promise<SaleItemType | SaleItemType[]>((res, rej) => {
+const getDataFromAPI = (endpoint: string) => new Promise((res, rej) => {
   const xmlReq = new XMLHttpRequest();
   xmlReq.responseType = 'json';
   xmlReq.onreadystatechange = () => {
@@ -27,7 +26,7 @@ interface IProduct {
   image: string;
   category: string;
 }
-const postDataOnAPI = (endpoint: string, product: IProduct) => new Promise<string>((res, rej) => {
+const postDataOnAPI = (endpoint: string, product: IProduct) => new Promise((res, rej) => {
   const xmlReq = new XMLHttpRequest();
   if (xmlReq.readyState === XMLHttpRequest.DONE) {
     if (xmlReq.status === 200) {

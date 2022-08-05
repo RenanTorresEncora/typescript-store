@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getAllProducts } from '../api/APIFunctions';
-import { SaleCardsContainer } from '../components/Content/styles';
-import SaleCard, { SaleItemType } from '../components/SaleCard';
+import { getAllProducts } from '../../api/APIFunctions';
+import { SaleCardsContainer } from '../../components/Content/styles';
+import SaleCard, { SaleItemType } from '../../components/SaleCard';
 
 const Home: React.FC = () => {
   const [products, setProducts] = useState<SaleItemType[]>([]);
