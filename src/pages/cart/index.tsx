@@ -1,55 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getAllProducts, getUserCart } from '../../api/APIFunctions';
+import CartItem from '../../components/CartItem';
+import { CartItemContainer } from '../../components/CartItem/styles';
 import { SaleItemType } from '../../components/SaleCard';
-import { CardTitle } from '../../components/SaleCard/styles';
-import { CartItem, CartItemContainer, CartItemPrice, CartItemThumbnail, CartItemTitle } from './styles';
+
+interface Cart {
+  id: number;
+  userId: number;
+  date: number;
+  products: CartProducts[];
+}
+type CartProducts = {
+  productId: number;
+  quantity: number;
+};
 
 const Cart: React.FC = (): JSX.Element => {
-  type Cart = {
-    id: number;
-    userId: number;
-    date: number;
-    products: [
-      {
-        productId: number;
-        quantity: number;
-      },
-    ];
-  };
   const { userId } = useParams<string>();
   const changePageTo = useNavigate();
-  const [userCart, setUserCart] = useState<Cart>();
-  const [userCartItems, setUserCartItems] = useState<SaleItemType[]>();
-
+  const [cartItems, setCartItems] = useState<SaleItemType[]>([]);
+  const cartItemsEl = cartItems?.map((item) => <CartItem item={item} key={item.id} />);
   useEffect(() => {
-    getUserCart(userId as string).then((data) => setUserCart(data as Cart));
+    const getCartProducts = async () => {
+      const allproducts = (await getAllProducts()) as SaleItemType[];
+      const userCart = (await getUserCart(userId as string)) as Cart;
+      // eslint-disable-next-line max-len
+      const userProductsInCart = userCart.products.map((product) => allproducts.find((item) => item.id === product.productId)) as SaleItemType[];
+      setCartItems(userProductsInCart);
+    };
+    getCartProducts();
   }, [userId]);
-
-  useEffect(() => {
-    getAllProducts().then((data) => {
-      const userProducts = (data as SaleItemType[])
-        .map((item) => ({ id: item.id, product: item }))
-        .filter((item) => userCart?.products.find((p) => p.productId === item.id));
-      console.log(userProducts);
-      setUserCartItems(userProducts.map((item) => item.product));
-    });
-  }, [userCart]);
-
-  const cartItems = userCartItems?.map((item) => {
-    const { id, title, price, image } = item as SaleItemType;
-    return (
-      <CartItem key={id}>
-        <CartItemThumbnail src={image} />
-        <CartItemTitle>{title}</CartItemTitle>
-        <CartItemPrice>{price}</CartItemPrice>
-      </CartItem>
-    );
-  });
 
   return (
     <>
-      <CartItemContainer>{cartItems}</CartItemContainer>
+      <CartItemContainer>{cartItemsEl}</CartItemContainer>
+      <div>Total:</div>
       <button type="button" onClick={() => changePageTo('/')}>
         Back
       </button>

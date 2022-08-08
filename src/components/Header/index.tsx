@@ -9,7 +9,7 @@ const Header: React.FC = () => {
       <Title>TypeScript Store</Title>
       <SubTitle> Affordable prices, awesome offers!</SubTitle>
       <CartButton
-        onClick={() => goToPage(`/cart/${Math.round(Math.random() * 21)}`)}
+        onClick={() => goToPage(`/cart/${Math.floor(Math.random() * 6) + 1}`)}
       />
     </StyledHeader>
   );

@@ -1,6 +1,6 @@
 import styled, { css } from 'styled-components';
 
-export const CartItem = styled.div`
+export const StyledCartItem = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
