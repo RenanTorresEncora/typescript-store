@@ -6,8 +6,8 @@ export const StyledCartItem = styled.div`
   align-items: center;
   padding: 1rem;
   margin-bottom: 0.5rem;
-  height: 5rem;
-  width: 15rem;
+  height: 8rem;
+  width: 20rem;
   background-color: white;
   border-radius: 0.25rem;
   box-shadow: 2px 2px 5px #777;
@@ -15,9 +15,14 @@ export const StyledCartItem = styled.div`
 
 export const CartItemTitle = styled.p`
 font-size: 1rem;
+overflow: hidden;
+text-overflow: ellipsis;
+height: 2ch;
+width: 45ch;
 `;
 export const CartItemPrice = styled.p`
-font-size: 0.5rem;
+font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+font-size: 1rem;
 `;
 
 export const CartItemThumbnail = styled.div`
