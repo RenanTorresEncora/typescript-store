@@ -6,7 +6,7 @@ const Header: React.FC = () => {
   const goToPage = useNavigate();
   return (
     <StyledHeader>
-      <Title>TypeScript Store</Title>
+      <Title onClick={() => goToPage('/')}>TypeScript Store</Title>
       <SubTitle> Affordable prices, awesome offers!</SubTitle>
       <CartButton
         onClick={() => goToPage(`/cart/${Math.floor(Math.random() * 6) + 1}`)}

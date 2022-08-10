@@ -5,7 +5,7 @@ import CartItem, { CartItemDetails } from '../../components/CartItem';
 import { CartItemContainer } from '../../components/CartItem/styles';
 import { SaleItemType } from '../../components/SaleCard';
 
-interface ICart {
+interface UserCart {
   id: number;
   userId: number;
   date: number;
@@ -26,7 +26,7 @@ const Cart: React.FC = (): JSX.Element => {
   useEffect(() => {
     const getCartProducts = async () => {
       const allproducts = (await getAllProducts()) as SaleItemType[];
-      const userCart = (await getUserCart(userId as string)) as ICart;
+      const userCart = (await getUserCart(userId as string)) as UserCart;
       const userProductsInCart = userCart.products.map((product) => ({
         product: allproducts.find(
           (item) => item.id === product.productId,
@@ -46,7 +46,9 @@ const Cart: React.FC = (): JSX.Element => {
 
   return (
     <>
-      <CartItemContainer>{cartItemsEl}</CartItemContainer>
+      <CartItemContainer>
+        {cartItemsEl || <div>No items in Cart</div>}
+      </CartItemContainer>
       <div>
         Total: US$
         {' '}

@@ -35,6 +35,7 @@ export const CartButton = styled.button`
 `;
 
 export const Title = styled.h1`
+  cursor: pointer;
   display: flex;
   justify-content: center;
   font-size: 3rem;
@@ -57,6 +58,9 @@ export const Title = styled.h1`
   -webkit-background-clip: text;
   color: transparent;
   text-shadow: 6px 6px rgba(black, 0.4);
+  @media screen and (max-width: 900px) {
+    font-size : 2rem;
+  }
 `;
 
 export const SubTitle = styled.h3`

@@ -10,6 +10,11 @@ export const ProductPage = styled.div`
   margin: 2rem;
   border-radius: 0.2rem;
   box-shadow: 0.25rem 0.25rem 0.5rem hsl(0, 0%, 70%);
+  @media (max-width: 900px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 interface ImageProps {
@@ -27,15 +32,20 @@ export const ProductImage = styled.div`
     box-shadow: 0.25rem 0.25rem 0.5rem hsl(0, 0%, 70%);
     border-radius: 0.3rem;
   `}
+  margin-bottom: 1rem;
   aspect-ratio: 4/3;
-
+  @media (max-width: 900px) {
+    height: 5rem;
+    width: 100px;
+    margin-inline: auto;
+  }
 `;
 export const ProductDetails = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 30rem;
+  width: 40ch;
 
   & > * {
     margin-bottom: 1rem;
@@ -50,6 +60,10 @@ export const ProductTitle = styled.h2`
   text-align: center;
   text-transform: capitalize;
   text-overflow: ellipsis;
+  @media (max-width: 900px) {
+    font-weight: bold;
+    font-size: 1rem;
+  }
 `;
 export const ProductDescription = styled.p`
   display: flex;
@@ -57,7 +71,7 @@ export const ProductDescription = styled.p`
   overflow: auto;
   font-size: 0.8rem;
   font-weight: normal;
-  color: #303030;
+  color: #666;
 `;
 
 export const ProductPriceTag = styled.h3`
@@ -66,5 +80,5 @@ export const ProductPriceTag = styled.h3`
   font-weight: bold;
   align-items: center;
   font-size: 2rem;
-  color: #000;
+  color: #333;
 `;

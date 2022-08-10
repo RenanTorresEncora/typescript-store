@@ -2,31 +2,58 @@ import styled, { css } from 'styled-components';
 
 export const StyledCartItem = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  margin-bottom: 0.5rem;
-  height: 8rem;
-  width: 20rem;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem;
+  margin-bottom: 0.75rem;
+  max-height: 8rem;
+  width: 80%;
   background-color: white;
   border-radius: 0.25rem;
   box-shadow: 2px 2px 5px #777;
 `;
 
-export const CartItemTitle = styled.p`
-font-size: 1rem;
-overflow: hidden;
-text-overflow: ellipsis;
-height: 2ch;
-width: 45ch;
+const CartItemText = styled.p`
+  display: flex;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1rem;
 `;
-export const CartItemPrice = styled.p`
-font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-font-size: 1rem;
+export const CartItemTitle = styled(CartItemText)`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-inline: 1rem;
+`;
+export const CartItemPrice = styled(CartItemText)`
+  font-weight: bold;
+`;
+export const AmountText = styled(CartItemText)`
+  color: #333;
+`;
+export const TotalPriceText = styled(CartItemText)`
+  font-style: italic;
+`;
+
+const CartItemButton = styled.button`
+  display: flex;
+  width: 1.75rem;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1rem;
+`;
+
+export const AddAmountButton = styled(CartItemButton)`
+  grid-area: 'addbtn';
+`;
+export const SubtracAmountButton = styled(CartItemButton)`
+  grid-area: 'subbtn';
 `;
 
 export const CartItemThumbnail = styled.div`
-  display: flex;
+  display: grid;
+  grid-area: 'thumb';
   justify-content: center;
   align-items: center;
   padding: 1rem;
@@ -36,7 +63,7 @@ export const CartItemThumbnail = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     background-color: white;
-    height: 3rem;
+    height: 4rem;
     aspect-ratio: 1;
   `}
 `;

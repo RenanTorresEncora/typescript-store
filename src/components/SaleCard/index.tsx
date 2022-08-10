@@ -26,7 +26,7 @@ interface IProps {
 const SaleCard: React.FC<IProps> = ({ item }): JSX.Element => {
   const { id, title, description, image, price } = item;
   const navigator = useNavigate();
-  const goToItemPage: () => void = () => {
+  const goToItemPage = () => {
     navigator(`product/${id}`);
   };
   return (
