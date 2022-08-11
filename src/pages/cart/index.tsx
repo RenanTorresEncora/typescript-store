@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getAllProducts, getUserCart } from '../../api/APIFunctions';
-import CartItem, { CartItemDetails } from '../../components/CartItem';
+import CartItem from '../../components/CartItem';
 import { CartItemContainer } from '../../components/CartItem/styles';
+import CartOrderSummary from '../../components/CartOrderSummary';
 import { SaleItemType } from '../../components/SaleCard';
+import { BuyButton } from '../../components/SaleCard/styles';
+import { CartContext, CartItemDetails } from '../../contexts/CartContext';
 
 interface UserCart {
   id: number;
@@ -18,11 +21,8 @@ interface UserCart {
 const Cart: React.FC = (): JSX.Element => {
   const { userId } = useParams<string>();
   const changePageTo = useNavigate();
-  const [cartItems, setCartItems] = useState<CartItemDetails[]>([]);
-  const [totalAmountFromCart, setTotalAmountFromCart] = useState(0);
-  const cartItemsEl = cartItems?.map((item) => (
-    <CartItem item={item} key={item.product.id} />
-  ));
+  const { cartState, setCartState } = useContext(CartContext);
+
   useEffect(() => {
     const getCartProducts = async () => {
       const allproducts = (await getAllProducts()) as SaleItemType[];
@@ -33,30 +33,35 @@ const Cart: React.FC = (): JSX.Element => {
         ) as SaleItemType,
         quantity: product.quantity,
       }));
-      setTotalAmountFromCart(
-        userProductsInCart.reduce((acc, item) => {
-          const amount = item.product.price * item.quantity;
-          return acc + amount;
-        }, 0),
+      const totalAmount = userProductsInCart.reduce(
+        (acc, item) => acc + item.product.price * item.quantity,
+        0,
       );
-      setCartItems(userProductsInCart);
+      setCartState({ products: userProductsInCart, totalAmount });
     };
     getCartProducts();
-  }, [userId, totalAmountFromCart]);
+  }, [userId, setCartState]);
 
+  useEffect(() => {
+    const totalAmount = cartState.products.reduce(
+      (acc, item) => acc + item.product.price * item.quantity,
+      0,
+    );
+    setCartState((prev) => ({ ...prev, totalAmount }));
+  }, [cartState.products, setCartState]);
+
+  const cartItemsEl = cartState.products.map((item: CartItemDetails) => (
+    <CartItem item={item} key={item.product.id} />
+  ));
   return (
     <>
       <CartItemContainer>
         {cartItemsEl || <div>No items in Cart</div>}
       </CartItemContainer>
-      <div>
-        Total: US$
-        {' '}
-        <span>{totalAmountFromCart.toFixed(2)}</span>
-      </div>
-      <button type="button" onClick={() => changePageTo('/')}>
+      <CartOrderSummary />
+      <BuyButton type="button" onClick={() => changePageTo('/')}>
         Back
-      </button>
+      </BuyButton>
     </>
   );
 };

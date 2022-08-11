@@ -1,5 +1,6 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import CartContextProvider from '../../contexts/CartContext';
 import Cart from '../../pages/cart';
 import Home from '../../pages/home/Home';
 import Product from '../../pages/product';
@@ -10,7 +11,14 @@ const Content: React.FC = () => (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/product/:id" element={<Product />} />
-      <Route path="/cart/:userId" element={<Cart />} />
+      <Route
+        path="/cart/:userId"
+        element={(
+          <CartContextProvider>
+            <Cart />
+          </CartContextProvider>
+        )}
+      />
     </Routes>
   </StyledContent>
 );
