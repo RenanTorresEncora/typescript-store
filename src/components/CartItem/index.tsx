@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
 import { CartContext, CartItemDetails } from '../../contexts/CartContext';
 import {
-  AddAmountButton,
+  PlusButton,
   AmountText,
   CartItemPrice,
   CartItemThumbnail,
   CartItemTitle,
   StyledCartItem,
-  SubtracAmountButton,
+  MinusButton,
   TotalPriceText,
+  AmountContainer,
 } from './styles';
 
 interface Props {
@@ -66,20 +67,11 @@ const CartItem: React.FC<Props> = ({ item }) => {
           alignItems: 'center',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            gap: '0.5rem',
-          }}
-        >
-          <SubtracAmountButton onClick={decreaseProductQty}>
-            -
-          </SubtracAmountButton>
+        <AmountContainer>
+          <MinusButton onClick={decreaseProductQty}>-</MinusButton>
           <AmountText>{`Amount: ${item.quantity}`}</AmountText>
-          <AddAmountButton onClick={increaseProductQty}>+</AddAmountButton>
-        </div>
+          <PlusButton onClick={increaseProductQty}>+</PlusButton>
+        </AmountContainer>
         <TotalPriceText>
           {`Total: US$ ${(item.quantity * price).toFixed(2)}`}
         </TotalPriceText>

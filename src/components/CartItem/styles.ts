@@ -44,11 +44,18 @@ const CartItemButton = styled.button`
   font-size: 1rem;
 `;
 
-export const AddAmountButton = styled(CartItemButton)`
+export const PlusButton = styled(CartItemButton)`
   grid-area: 'addbtn';
 `;
-export const SubtracAmountButton = styled(CartItemButton)`
+export const MinusButton = styled(CartItemButton)`
   grid-area: 'subbtn';
+`;
+
+export const AmountContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 export const CartItemThumbnail = styled.div`

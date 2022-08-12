@@ -6,17 +6,7 @@ import { CartItemContainer } from '../../components/CartItem/styles';
 import CartOrderSummary from '../../components/CartOrderSummary';
 import { SaleItemType } from '../../components/SaleCard';
 import { BuyButton } from '../../components/SaleCard/styles';
-import { CartContext, CartItemDetails } from '../../contexts/CartContext';
-
-interface UserCart {
-  id: number;
-  userId: number;
-  date: number;
-  products: {
-    productId: number;
-    quantity: number;
-  }[];
-}
+import { CartContext, CartItemDetails, UserCart } from '../../contexts/CartContext';
 
 const Cart: React.FC = (): JSX.Element => {
   const { userId } = useParams<string>();
@@ -28,25 +18,27 @@ const Cart: React.FC = (): JSX.Element => {
     const userCart = getUserCart(userId as string);
     const fetchingData = [allProducts, userCart];
 
-    Promise.all(fetchingData).then((results) => {
-      const userProductsInCart = (results[1] as UserCart).products.map((product) => ({
-        product: (results[0] as SaleItemType[]).find(
-          (item) => item.id === product.productId,
-        ) as SaleItemType,
-        quantity: product.quantity,
-      }));
-      const totalAmount = userProductsInCart.reduce(
-        (acc, item) => acc + item.product.price * item.quantity,
-        0,
-      );
-      setCartState({ products: userProductsInCart, totalAmount });
-    });
+    Promise.all(fetchingData)
+      .then((results) => {
+        const userProductsInCart = (results[1] as UserCart).products.map((product) => ({
+          product: (results[0] as SaleItemType[]).find(
+            (item) => item.id === product.productId,
+          ) as SaleItemType,
+          quantity: product.quantity,
+        }));
+        const totalPrice = userProductsInCart.reduce(
+          (acc, item) => acc + item.product.price * item.quantity,
+          0,
+        );
+        setCartState({ products: userProductsInCart, totalPrice });
+      })
+      .catch(() => console.error('Unable to fetch UserCart'));
   }, [userId, setCartState]);
 
   useEffect(() => {
     // eslint-disable-next-line max-len
-    const totalAmount = cartState.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-    setCartState((prev) => ({ ...prev, totalAmount }));
+    const totalPrice = cartState.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+    setCartState((prev) => ({ ...prev, totalPrice }));
   }, [cartState.products, setCartState]);
 
   const cartItemsEl = cartState.products.map((item: CartItemDetails) => (

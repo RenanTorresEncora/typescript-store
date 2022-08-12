@@ -12,15 +12,27 @@ export interface CartItemDetails {
   quantity: number;
   product: SaleItemType;
 }
+
 export interface CartState {
   products: CartItemDetails[];
-  totalAmount: number;
+  totalPrice: number;
+}
+
+export interface UserCart {
+  id: number;
+  userId: number;
+  date: number;
+  products: {
+    productId: number;
+    quantity: number;
+  }[];
 }
 
 const initialState: CartState = {
   products: [],
-  totalAmount: 0,
+  totalPrice: 0,
 };
+
 export interface CartContextType {
   cartState: CartState;
   setCartState: Dispatch<SetStateAction<CartState>>;
@@ -29,9 +41,14 @@ export interface CartContextType {
 export const CartContext = createContext<CartContextType>(
   {} as CartContextType,
 );
-
+const getCartFromLS = () => {
+  // The following feature isn't workin properly right now, so the app will use initialState instead
+  const userCartFromLS = (JSON.parse(localStorage.getItem('UserCart') as string) as CartState)
+    || initialState;
+  return userCartFromLS;
+};
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
-  const [cartState, setCartState] = useState(initialState);
+  const [cartState, setCartState] = useState(getCartFromLS());
   const cartContext = useMemo<CartContextType>(
     () => ({ cartState, setCartState }),
     [cartState],

@@ -7,7 +7,7 @@ const CartOrderSummary = () => {
   return (
     <StyledCartOrderSummary>
       <OrderText>{`Items in Cart: ${cartState.products.reduce((acc, item) => (acc + item.quantity), 0)}`}</OrderText>
-      <OrderText>{`Total: US$ ${cartState.totalAmount.toFixed(2)}`}</OrderText>
+      <OrderText>{`Total: US$ ${cartState.totalPrice.toFixed(2)}`}</OrderText>
     </StyledCartOrderSummary>
   );
 };
