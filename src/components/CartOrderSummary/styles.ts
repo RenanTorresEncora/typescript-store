@@ -6,7 +6,7 @@ export const StyledCartOrderSummary = styled.div`
   padding: 0.5rem;
   margin-bottom: 0.75rem;
   max-height: 8rem;
-  width: 50%;
+  width: minmax(2rem, 15rem);
   background-color: white;
   border-radius: 0.25rem;
   box-shadow: 2px 2px 5px #777;

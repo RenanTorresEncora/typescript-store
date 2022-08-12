@@ -24,11 +24,13 @@ const Cart: React.FC = (): JSX.Element => {
   const { cartState, setCartState } = useContext(CartContext);
 
   useEffect(() => {
-    const getCartProducts = async () => {
-      const allproducts = (await getAllProducts()) as SaleItemType[];
-      const userCart = (await getUserCart(userId as string)) as UserCart;
-      const userProductsInCart = userCart.products.map((product) => ({
-        product: allproducts.find(
+    const allProducts = getAllProducts();
+    const userCart = getUserCart(userId as string);
+    const fetchingData = [allProducts, userCart];
+
+    Promise.all(fetchingData).then((results) => {
+      const userProductsInCart = (results[1] as UserCart).products.map((product) => ({
+        product: (results[0] as SaleItemType[]).find(
           (item) => item.id === product.productId,
         ) as SaleItemType,
         quantity: product.quantity,
@@ -38,15 +40,12 @@ const Cart: React.FC = (): JSX.Element => {
         0,
       );
       setCartState({ products: userProductsInCart, totalAmount });
-    };
-    getCartProducts();
+    });
   }, [userId, setCartState]);
 
   useEffect(() => {
-    const totalAmount = cartState.products.reduce(
-      (acc, item) => acc + item.product.price * item.quantity,
-      0,
-    );
+    // eslint-disable-next-line max-len
+    const totalAmount = cartState.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
     setCartState((prev) => ({ ...prev, totalAmount }));
   }, [cartState.products, setCartState]);
 
