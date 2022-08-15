@@ -1,24 +1,13 @@
-import { oneProductEndpoint, productsEndpoint, userCartEndpoint } from './APIRoutes';
+import {
+  oneProductEndpoint,
+  productsEndpoint,
+  userCartEndpoint,
+} from './APIRoutes';
 
 export const getAllProducts = () => getDataFromAPI(productsEndpoint);
 export const getOneProduct = (id: string) => getDataFromAPI(oneProductEndpoint(id));
 export const getUserCart = (userId: string) => getDataFromAPI(userCartEndpoint(userId));
 
-const getDataFromAPI = (endpoint: string) => new Promise((res, rej) => {
-  const xmlReq = new XMLHttpRequest();
-  xmlReq.responseType = 'json';
-  xmlReq.onreadystatechange = () => {
-    if (xmlReq.readyState === XMLHttpRequest.DONE) {
-      if (xmlReq.status === 200) {
-        res(xmlReq.response);
-      } else {
-        rej(Error('Error occurred'));
-      }
-    }
-  };
-  xmlReq.open('GET', endpoint);
-  xmlReq.send();
-});
 interface IProduct {
   title: string;
   price: number;
@@ -26,16 +15,26 @@ interface IProduct {
   image: string;
   category: string;
 }
-const postDataOnAPI = (endpoint: string, product: IProduct) => new Promise((res, rej) => {
-  const xmlReq = new XMLHttpRequest();
-  if (xmlReq.readyState === XMLHttpRequest.DONE) {
-    if (xmlReq.status === 200) {
-      res(xmlReq.response);
-    } else {
-      rej(Error('404 Error'));
+
+const getDataFromAPI = (endpoint: string) => fetch(endpoint)
+  .then((data) => data.json())
+  .catch(() => console.log(Error('Unable to fetch data')));
+const postDataOnAPI = (endpoint: string, product: IProduct) => fetch(endpoint, {
+  method: 'POST',
+  body: JSON.stringify(product),
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+  .then((response) => {
+    if (response.ok) {
+      return response.json();
     }
-  }
-  xmlReq.open('POST', endpoint);
-  xmlReq.setRequestHeader('Content-Type', 'application/json');
-  xmlReq.send(JSON.stringify(product));
-});
+    return Promise.reject(response);
+  })
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((error) => {
+    console.warn(`Couldn't POST data. ${error}`);
+  });

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import cartIcon from '../../assets/svg/cart-icon.svg';
 
 export const StyledHeader = styled.header`
@@ -11,8 +11,25 @@ export const StyledHeader = styled.header`
   top: 0;
   position: fixed;
 `;
-
 export const CartButton = styled.button`
+  ${({ items }: { items: number }) => css`
+    &::after {
+      content: '${items}';
+      background-color: red;
+      border: 2px solid white;
+      border-radius: 50%;
+      height: 1rem;
+      width:1rem;
+      color: white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      right: -0.5rem;
+      bottom: -0.5rem;
+    }
+  `}
   height: 3rem;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -59,7 +76,7 @@ export const Title = styled.h1`
   color: transparent;
   text-shadow: 6px 6px rgba(black, 0.4);
   @media screen and (max-width: 900px) {
-    font-size : 2rem;
+    font-size: 2rem;
   }
 `;
 

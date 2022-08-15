@@ -22,27 +22,12 @@ import {
 const Product: React.FC = () => {
   const { id } = useParams<string>();
   const changePageTo = useNavigate();
-  const { setCartState } = useContext(CartContext);
+  const { addProductToCart } = useContext(CartContext);
   const [product, setProduct] = useState<SaleItemType>();
   const [productAmount, setProductAmount] = useState<number>(1);
   useEffect(() => {
     getOneProduct(id as string).then((data) => setProduct(data as SaleItemType));
   }, [id]);
-
-  const addProductToCart = () => {
-    setCartState((prev) => {
-      const newState = {
-        ...prev,
-        products: [
-          ...prev.products,
-          { product, quantity: productAmount } as CartItemDetails,
-        ],
-      };
-      // The following feature isn't working properly yet so it's disabled by now
-      // localStorage.setItem('UserCart', JSON.stringify(newState));
-      return newState;
-    });
-  };
 
   const increaseAmount = () => setProductAmount((prev) => (prev > 1 ? prev - 1 : 1));
   const decreaseAmount = () => setProductAmount((prev) => (prev < 10 ? prev + 1 : 10));
@@ -63,8 +48,8 @@ const Product: React.FC = () => {
             <BuyButton
               type="button"
               onClick={() => {
-                addProductToCart();
-                changePageTo('/cart/7');
+                addProductToCart({ product, quantity: productAmount });
+                changePageTo('/cart/');
               }}
             >
               Add to cart

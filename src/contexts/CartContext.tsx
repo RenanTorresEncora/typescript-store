@@ -15,6 +15,7 @@ export interface CartItemDetails {
 
 export interface CartState {
   products: CartItemDetails[];
+  itemsInCart: number,
   totalPrice: number;
 }
 
@@ -30,27 +31,42 @@ export interface UserCart {
 
 const initialState: CartState = {
   products: [],
+  itemsInCart: 0,
   totalPrice: 0,
 };
 
 export interface CartContextType {
   cartState: CartState;
   setCartState: Dispatch<SetStateAction<CartState>>;
+  addProductToCart: (product: CartItemDetails) => void;
 }
 
 export const CartContext = createContext<CartContextType>(
   {} as CartContextType,
 );
 const getCartFromLS = () => {
-  // The following feature isn't workin properly right now, so the app will use initialState instead
   const userCartFromLS = (JSON.parse(localStorage.getItem('UserCart') as string) as CartState)
     || initialState;
   return userCartFromLS;
 };
+
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [cartState, setCartState] = useState(getCartFromLS());
+  const addProductToCart = ({ product, quantity }: CartItemDetails) => {
+    setCartState((prevState) => {
+      const products = [...prevState.products, { product, quantity }];
+      const itemsInCart = products.reduce((total, item) => total + item.quantity, 0);
+      const newState = {
+        ...prevState,
+        products,
+        itemsInCart,
+      };
+      localStorage.setItem('UserCart', JSON.stringify(newState));
+      return newState;
+    });
+  };
   const cartContext = useMemo<CartContextType>(
-    () => ({ cartState, setCartState }),
+    () => ({ cartState, setCartState, addProductToCart }),
     [cartState],
   );
   return (

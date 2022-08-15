@@ -19,7 +19,7 @@ const Content: React.FC = () => (
         )}
       />
       <Route
-        path="/cart/:userId"
+        path="/cart/"
         element={(
           <CartContextProvider>
             <Cart />
