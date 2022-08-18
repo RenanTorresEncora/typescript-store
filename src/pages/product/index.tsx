@@ -9,7 +9,7 @@ import {
 } from '../../components/CartItem/styles';
 import { SaleItemType } from '../../components/SaleCard';
 import { BuyButton } from '../../components/SaleCard/styles';
-import { CartContext, CartItemDetails } from '../../contexts/CartContext';
+import { CartContext } from '../../contexts/CartContext';
 import {
   ProductDescription,
   ProductDetails,

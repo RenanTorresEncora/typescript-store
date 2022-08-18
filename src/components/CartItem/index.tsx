@@ -18,34 +18,7 @@ interface Props {
 
 const CartItem: React.FC<Props> = ({ item }) => {
   const { id, title, price, image } = item.product;
-  const { setCartState } = useContext(CartContext);
-
-  const increaseProductQty = () => {
-    setCartState((prev) => ({
-      ...prev,
-      products: prev.products.map((p) => {
-        if (p.product.id === id) {
-          if (p.quantity < 10) {
-            return { ...p, quantity: p.quantity + 1 };
-          }
-        }
-        return p;
-      }),
-    }));
-  };
-  const decreaseProductQty = () => {
-    setCartState((prev) => ({
-      ...prev,
-      products: prev.products.map((p) => {
-        if (p.product.id === id) {
-          if (p.quantity > 0) {
-            return { ...p, quantity: p.quantity - 1 };
-          }
-        }
-        return p;
-      }),
-    }));
-  };
+  const { increaseProductQty, decreaseProductQty } = useContext(CartContext);
 
   return (
     <StyledCartItem key={id}>
@@ -68,9 +41,9 @@ const CartItem: React.FC<Props> = ({ item }) => {
         }}
       >
         <AmountContainer>
-          <MinusButton onClick={decreaseProductQty}>-</MinusButton>
+          <MinusButton onClick={() => decreaseProductQty(id)}>-</MinusButton>
           <AmountText>{`Amount: ${item.quantity}`}</AmountText>
-          <PlusButton onClick={increaseProductQty}>+</PlusButton>
+          <PlusButton onClick={() => increaseProductQty(id)}>+</PlusButton>
         </AmountContainer>
         <TotalPriceText>
           {`Total: US$ ${(item.quantity * price).toFixed(2)}`}

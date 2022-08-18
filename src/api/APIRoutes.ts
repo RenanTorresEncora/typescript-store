@@ -7,3 +7,7 @@ export const userCartEndpoint = (userId: string) => `${storeApiEndpoint}carts/${
 export const limitProducts = (numberOfProducts: string): string => `${productsEndpoint}?limit=${numberOfProducts}`;
 
 export const oneProductEndpoint = (productId: string): string => `${productsEndpoint}/${productId}`;
+
+export const localServerEndpoint = 'http://localhost:5000';
+
+export const localUserCartEndpoint = `${localServerEndpoint}/user/cart/`;

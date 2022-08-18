@@ -1,4 +1,5 @@
 import {
+  localUserCartEndpoint,
   oneProductEndpoint,
   productsEndpoint,
   userCartEndpoint,
@@ -7,8 +8,9 @@ import {
 export const getAllProducts = () => getDataFromAPI(productsEndpoint);
 export const getOneProduct = (id: string) => getDataFromAPI(oneProductEndpoint(id));
 export const getUserCart = (userId: string) => getDataFromAPI(userCartEndpoint(userId));
+export const saveUserCart = (product: IProduct) => postDataOnAPI(localUserCartEndpoint, product);
 
-interface IProduct {
+export interface IProduct {
   title: string;
   price: number;
   description: string;
@@ -19,6 +21,7 @@ interface IProduct {
 const getDataFromAPI = (endpoint: string) => fetch(endpoint)
   .then((data) => data.json())
   .catch(() => console.log(Error('Unable to fetch data')));
+
 const postDataOnAPI = (endpoint: string, product: IProduct) => fetch(endpoint, {
   method: 'POST',
   body: JSON.stringify(product),
@@ -36,5 +39,5 @@ const postDataOnAPI = (endpoint: string, product: IProduct) => fetch(endpoint, {
     console.log(data);
   })
   .catch((error) => {
-    console.warn(`Couldn't POST data. ${error}`);
+    console.warn(`Couldn't POST data. ${console.error(error)}`);
   });

@@ -15,7 +15,7 @@ export interface CartItemDetails {
 
 export interface CartState {
   products: CartItemDetails[];
-  itemsInCart: number,
+  itemsInCart: number;
   totalPrice: number;
 }
 
@@ -39,6 +39,8 @@ export interface CartContextType {
   cartState: CartState;
   setCartState: Dispatch<SetStateAction<CartState>>;
   addProductToCart: (product: CartItemDetails) => void;
+  increaseProductQty: (id: number) => void;
+  decreaseProductQty: (id: number) => void;
 }
 
 export const CartContext = createContext<CartContextType>(
@@ -52,10 +54,14 @@ const getCartFromLS = () => {
 
 const CartContextProvider = ({ children }: { children: ReactNode }) => {
   const [cartState, setCartState] = useState(getCartFromLS());
+
   const addProductToCart = ({ product, quantity }: CartItemDetails) => {
     setCartState((prevState) => {
       const products = [...prevState.products, { product, quantity }];
-      const itemsInCart = products.reduce((total, item) => total + item.quantity, 0);
+      const itemsInCart = products.reduce(
+        (total, item) => total + item.quantity,
+        0,
+      );
       const newState = {
         ...prevState,
         products,
@@ -65,8 +71,44 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
       return newState;
     });
   };
+
+  const increaseProductQty = (id: number) => {
+    setCartState((prev) => ({
+      ...prev,
+      products: prev.products.map((p) => {
+        if (p.product.id === id) {
+          if (p.quantity < 10) {
+            return { ...p, quantity: p.quantity + 1 };
+          }
+        }
+        return p;
+      }),
+      itemsInCart: prev.products.reduce(
+        (total, item) => total + item.quantity,
+        0,
+      ),
+    }));
+  };
+  const decreaseProductQty = (id: number) => {
+    setCartState((prev) => ({
+      ...prev,
+      products: prev.products.map((p) => {
+        if (p.product.id === id) {
+          if (p.quantity > 0) {
+            return { ...p, quantity: p.quantity - 1 };
+          }
+        }
+        return p;
+      }),
+      itemsInCart: prev.products.reduce(
+        (total, item) => total + item.quantity,
+        0,
+      ),
+    }));
+  };
+
   const cartContext = useMemo<CartContextType>(
-    () => ({ cartState, setCartState, addProductToCart }),
+    () => ({ cartState, setCartState, addProductToCart, increaseProductQty, decreaseProductQty }),
     [cartState],
   );
   return (
