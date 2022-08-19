@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router';
 import { CartContext, CartItemDetails } from '../../contexts/CartContext';
 import {
   PlusButton,
@@ -19,6 +20,7 @@ interface Props {
 const CartItem: React.FC<Props> = ({ item }) => {
   const { id, title, price, image } = item.product;
   const { increaseProductQty, decreaseProductQty } = useContext(CartContext);
+  const goToItemPage = useNavigate();
 
   return (
     <StyledCartItem key={id}>
@@ -29,7 +31,7 @@ const CartItem: React.FC<Props> = ({ item }) => {
           alignItems: 'center',
         }}
       >
-        <CartItemThumbnail src={image} />
+        <CartItemThumbnail src={image} onClick={() => goToItemPage(`/product/${id}`)} />
         <CartItemTitle>{title}</CartItemTitle>
         <CartItemPrice>{`US$ ${price.toFixed(2)}`}</CartItemPrice>
       </div>

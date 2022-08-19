@@ -60,6 +60,9 @@ export const AmountContainer = styled.div`
 
 export const CartItemThumbnail = styled.div`
   display: grid;
+  cursor:pointer;
+  border: 1px solid #DDD;
+  border-radius: 0.3rem;
   grid-area: 'thumb';
   justify-content: center;
   align-items: center;

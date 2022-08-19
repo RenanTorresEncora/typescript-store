@@ -11,15 +11,15 @@ const Cart: React.FC = (): JSX.Element => {
   const changePageTo = useNavigate();
   const { cartState, setCartState } = useContext(CartContext);
 
+  const cartItemsEl = cartState.products.map((item: CartItemDetails) => (
+    <CartItem item={item} key={item.product.id} />
+  ));
+
   useEffect(() => {
     // eslint-disable-next-line max-len
     const totalPrice = cartState.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
     setCartState((prev) => ({ ...prev, totalPrice }));
   }, [cartState.products, setCartState]);
-
-  const cartItemsEl = cartState.products.map((item: CartItemDetails) => (
-    <CartItem item={item} key={item.product.id} />
-  ));
 
   const testProduct: IProduct = {
     category: 'test',
@@ -32,7 +32,7 @@ const Cart: React.FC = (): JSX.Element => {
   return (
     <>
       <CartItemContainer>
-        {cartItemsEl || <div>No items in Cart</div>}
+        {cartItemsEl.length === 0 ? <div>No items in Cart</div> : cartItemsEl}
       </CartItemContainer>
       <CartOrderSummary />
       <div style={{ display: 'flex', gap: '1rem' }}>

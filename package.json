@@ -42,6 +42,9 @@
         }
       ]
     },
+    "parserPlugin": {
+      "importAssertions": true
+    },
     "parserOptions": {
       "project": "./tsconfig.json"
     }

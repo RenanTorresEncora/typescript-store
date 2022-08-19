@@ -18,16 +18,16 @@ export const CartButton = styled.button`
       background-color: red;
       border: 2px solid white;
       border-radius: 50%;
-      height: 1rem;
-      width:1rem;
+      height: 1.5rem;
+      width:1.5rem;
       color: white;
       font-weight: bold;
       display: flex;
       align-items: center;
       justify-content: center;
       position: absolute;
-      right: -0.5rem;
-      bottom: -0.5rem;
+      right: -0.75rem;
+      bottom: -0.75rem;
     }
   `}
   height: 3rem;

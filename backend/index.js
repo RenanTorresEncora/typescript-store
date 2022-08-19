@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { readFile } from 'fs/promises';
-import db from './userCart.js';
+import jsonDB from './userCart.json' assert { type: 'json' };
 
 const app = express();
 const corsOptions = {
@@ -9,8 +9,8 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
-
 const port = 5000;
+const db = jsonDB;
 
 // GET
 app.get('/', (req, res) => {
@@ -45,12 +45,12 @@ app.get('/', (req, res) => {
 
 // POST
 app.post('/user/cart/', cors(corsOptions), (req, res) => {
-  req.on('data', (data) => console.log(data));
-  readFile('./backend/userCart.js', 'utf-8').then((data) => {
-    res.writeHead(200, { 'content-type': 'text/plain' });
-    res.write(JSON.stringify(data));
-    res.end();
+  let incomingData = {};
+  req.on('data', (data) => {
+    incomingData = JSON.parse(data);
+    console.log(incomingData.title);
   });
+  res.json(db);
 });
 
 //404 REQ
