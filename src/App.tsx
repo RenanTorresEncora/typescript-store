@@ -10,8 +10,8 @@ const App: React.FC = () => (
     <GlobalStyle />
     <CartContextProvider>
       <Header />
+      <Content />
     </CartContextProvider>
-    <Content />
   </BrowserRouter>
 );
 

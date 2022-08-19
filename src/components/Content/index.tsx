@@ -10,22 +10,8 @@ const Content: React.FC = () => (
   <StyledContent>
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route
-        path="/product/:id"
-        element={(
-          <CartContextProvider>
-            <Product />
-          </CartContextProvider>
-        )}
-      />
-      <Route
-        path="/cart/"
-        element={(
-          <CartContextProvider>
-            <Cart />
-          </CartContextProvider>
-        )}
-      />
+      <Route path="/product/:id" element={<Product />} />
+      <Route path="/cart/" element={<Cart />} />
     </Routes>
   </StyledContent>
 );

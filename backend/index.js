@@ -53,6 +53,7 @@ app.post('/user/cart/', cors(corsOptions), (req, res) => {
   });
 });
 
+//404 REQ
 app.all('*', (req, res) => {
   res.status(404).format({
     html: () => {

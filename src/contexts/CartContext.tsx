@@ -73,38 +73,46 @@ const CartContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const increaseProductQty = (id: number) => {
-    setCartState((prev) => ({
-      ...prev,
-      products: prev.products.map((p) => {
-        if (p.product.id === id) {
-          if (p.quantity < 10) {
-            return { ...p, quantity: p.quantity + 1 };
+    setCartState((prev) => {
+      const newState = {
+        ...prev,
+        products: prev.products.map((p) => {
+          if (p.product.id === id) {
+            if (p.quantity < 10) {
+              return { ...p, quantity: p.quantity + 1 };
+            }
           }
-        }
-        return p;
-      }),
-      itemsInCart: prev.products.reduce(
+          return p;
+        }),
+      };
+      newState.itemsInCart = newState.products.reduce(
         (total, item) => total + item.quantity,
         0,
-      ),
-    }));
+      );
+      localStorage.setItem('UserCart', JSON.stringify(newState));
+      return newState;
+    });
   };
   const decreaseProductQty = (id: number) => {
-    setCartState((prev) => ({
-      ...prev,
-      products: prev.products.map((p) => {
-        if (p.product.id === id) {
-          if (p.quantity > 0) {
-            return { ...p, quantity: p.quantity - 1 };
+    setCartState((prev) => {
+      const newState = {
+        ...prev,
+        products: prev.products.map((p) => {
+          if (p.product.id === id) {
+            if (p.quantity > 0) {
+              return { ...p, quantity: p.quantity - 1 };
+            }
           }
-        }
-        return p;
-      }),
-      itemsInCart: prev.products.reduce(
+          return p;
+        }),
+      };
+      newState.itemsInCart = newState.products.reduce(
         (total, item) => total + item.quantity,
         0,
-      ),
-    }));
+      );
+      localStorage.setItem('UserCart', JSON.stringify(newState));
+      return newState;
+    });
   };
 
   const cartContext = useMemo<CartContextType>(
