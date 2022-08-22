@@ -1,7 +1,11 @@
 {
-  "user": "Test user",
-  "products": [
-    { "title": "product 1", "price": 10.0 },
-    { "title": "product 2", "price": 20.0 }
-  ]
+  "userId": 1,
+  "userCart": {
+    "products": [
+      { "productId": 2, "quantity": 1 },
+      { "productId": 1, "quantity": 6 }
+    ],
+    "itemsInCart": 7,
+    "totalPrice": 682
+  }
 }

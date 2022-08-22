@@ -1,14 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import jsonDB from './userCart.json' assert { type: 'json' };
+import { readFile, writeFile } from 'fs';
 
 const app = express();
 const corsOptions = {
   origin: 'http://localhost:3000',
   optionsSuccessStatus: 200,
 };
-app.use(cors(corsOptions));
-app.use(express.json());
+app.use([cors(corsOptions), express.json()]);
+
 const port = 5000;
 const db = jsonDB;
 
@@ -18,12 +19,12 @@ app.get('/', (req, res) => {
     html: () => {
       res.send(
         `<html>
-          <ul>${db.products
+          <ul>${db.userCart.products
             .map(
               (item) => `
               <li>
-                <h2>${item.title}</h2>
-                <h3>${item.price}</h3>
+                <h2>Product Id: ${item.productId}</h2>
+                <h3>Quantity: ${item.quantity}</h3>
               </li>`
             )
             .join('')}</ul>
@@ -32,22 +33,29 @@ app.get('/', (req, res) => {
     },
     text: () => {
       res.send(
-        db.products
-          .map((item) => ` - ${item.title} / ${item.price} \n`)
+        db.userCart.products
+          .map((item) => `ProductId: ${item.productId} / Qty: ${item.quantity} \n`)
           .join('')
       );
     },
     json: () => {
-      res.json(db.products);
+      res.json(db.userCart.products);
     },
   });
 });
 
 // POST
-app.post('/user/:id/cart/', cors(corsOptions), (req, res) => {
-  const { userId } = req.body;
-  console.log(req.body.userCart.products);
-  res.status(200).json({ message: "POST successful" });
+app.post('/user/:userId/cart/', (req, res) => {
+  const { userId } = req.params;
+  const { userCart } = req.body;
+  if (db.userId === Number(userId)) {
+    db.userCart = userCart;
+    writeFile('./backend/userCart.json', JSON.stringify(db), () => {
+      res.status(201).json({ success: true, message: 'POST successful' });
+    });
+  } else {
+    res.status(400).json({success: false, message: `No such user with ID: ${userId}`})
+  }
 });
 
 //404 REQ

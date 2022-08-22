@@ -16,7 +16,6 @@ const Cart: React.FC = (): JSX.Element => {
   ));
 
   useEffect(() => {
-    // eslint-disable-next-line max-len
     const totalPrice = Number(cartState.products
       .reduce((acc, item) => acc + item.product.price * item.quantity, 0)
       .toFixed(2));
