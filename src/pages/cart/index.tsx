@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IProduct, saveUserCart } from '../../api/APIFunctions';
+import { UserCart, saveUserCart } from '../../api/APIFunctions';
 import CartItem from '../../components/CartItem';
 import { CartItemContainer } from '../../components/CartItem/styles';
 import CartOrderSummary from '../../components/CartOrderSummary';
@@ -17,17 +17,23 @@ const Cart: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     // eslint-disable-next-line max-len
-    const totalPrice = cartState.products.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+    const totalPrice = Number(cartState.products
+      .reduce((acc, item) => acc + item.product.price * item.quantity, 0)
+      .toFixed(2));
     setCartState((prev) => ({ ...prev, totalPrice }));
   }, [cartState.products, setCartState]);
 
-  const testProduct: IProduct = {
-    category: 'test',
-    title: 'Title',
-    price: 10,
-    description: 'desc',
-    image: 'img',
-  };
+  const testCart: UserCart = {
+    userId: '1',
+    userCart: {
+      products: cartState.products.map((item) => ({
+        productId: item.product.id,
+        quantity: item.quantity,
+      })),
+      itemsInCart: cartState.itemsInCart,
+      totalPrice: cartState.totalPrice,
+    },
+  }
 
   return (
     <>
@@ -36,7 +42,7 @@ const Cart: React.FC = (): JSX.Element => {
       </CartItemContainer>
       <CartOrderSummary />
       <div style={{ display: 'flex', gap: '1rem' }}>
-        <BuyButton type="button" onClick={() => saveUserCart(testProduct)}>
+        <BuyButton type="button" onClick={() => saveUserCart(testCart)}>
           Save Cart
         </BuyButton>
         <BuyButton type="button" onClick={() => changePageTo('/')}>

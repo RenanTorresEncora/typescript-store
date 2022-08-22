@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-import { readFile } from 'fs/promises';
 import jsonDB from './userCart.json' assert { type: 'json' };
 
 const app = express();
@@ -9,6 +8,7 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
+app.use(express.json());
 const port = 5000;
 const db = jsonDB;
 
@@ -44,13 +44,10 @@ app.get('/', (req, res) => {
 });
 
 // POST
-app.post('/user/cart/', cors(corsOptions), (req, res) => {
-  let incomingData = {};
-  req.on('data', (data) => {
-    incomingData = JSON.parse(data);
-    console.log(incomingData.title);
-  });
-  res.json(db);
+app.post('/user/:id/cart/', cors(corsOptions), (req, res) => {
+  const { userId } = req.body;
+  console.log(req.body.userCart.products);
+  res.status(200).json({ message: "POST successful" });
 });
 
 //404 REQ

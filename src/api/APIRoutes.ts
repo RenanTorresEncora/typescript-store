@@ -10,4 +10,4 @@ export const oneProductEndpoint = (productId: string): string => `${productsEndp
 
 export const localServerEndpoint = 'http://localhost:5000';
 
-export const localUserCartEndpoint = `${localServerEndpoint}/user/cart/`;
+export const localUserCartEndpoint = (userId: string) => `${localServerEndpoint}/user/${userId}/cart/`;
