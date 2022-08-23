@@ -32,7 +32,7 @@ const Cart: React.FC = (): JSX.Element => {
       itemsInCart: cartState.itemsInCart,
       totalPrice: cartState.totalPrice,
     },
-  }
+  };
 
   return (
     <>

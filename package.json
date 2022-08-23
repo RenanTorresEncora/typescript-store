@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "typescript-store",
   "version": "0.1.0",
   "private": true,
@@ -44,9 +43,6 @@
     },
     "parserOptions": {
       "project": "./tsconfig.json"
-    },
-    "parserPlugin": {
-      "importAssertions": true
     }
   },
   "browserslist": {
